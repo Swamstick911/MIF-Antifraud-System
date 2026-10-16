@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "MIF Shield — Digital Safety Assistant",
+  "version": "0.1.0",
+  "description": "Spots message bombing, disguised file downloads and impersonation call scams, and explains in plain language why something is unsafe.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MIF Shield"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "downloads",
+    "contextMenus"
+  ],
+  "host_permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://localhost/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://web.whatsapp.com/*",
+        "https://web.telegram.org/*",
+        "https://messages.google.com/*"
+      ],
+      "js": ["messaging.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
