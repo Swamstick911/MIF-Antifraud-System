@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+*.log
+.DS_Store
+
+# docs and design assets stay local
+docs/
+ARCHITECTURE.md
+DEMO.md
+DESIGN.md
+*.docx

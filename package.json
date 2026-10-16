@@ -1,0 +1,33 @@
+{
+  "name": "mif-shield",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MIF Shield - browser-based digital safety assistant that detects message bombing, malicious file downloads, and impersonation call scams.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.ui.js",
+    "build": "vite build --config vite.config.ui.js && npm run build:bg && npm run build:cs && npm run build:msg",
+    "watch": "npm run build -- --watch",
+    "test": "node --test tests/",
+    "clean": "rm -rf dist",
+    "build:bg": "MIF_ENTRY=background vite build --config vite.config.scripts.js",
+    "build:cs": "MIF_ENTRY=content vite build --config vite.config.scripts.js",
+    "smoke": "esbuild tests/smoke.jsx --bundle --platform=node --format=cjs --loader:.css=empty --outfile=node_modules/.cache/mif-smoke.cjs --log-level=error && node node_modules/.cache/mif-smoke.cjs",
+    "check": "npm run test && npm run smoke && npm run build",
+    "build:msg": "MIF_ENTRY=messaging vite build --config vite.config.scripts.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.7"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true
+  }
+}
