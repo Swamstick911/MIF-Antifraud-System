@@ -13,8 +13,9 @@
     "build:bg": "MIF_ENTRY=background vite build --config vite.config.scripts.js",
     "build:cs": "MIF_ENTRY=content vite build --config vite.config.scripts.js",
     "smoke": "esbuild tests/smoke.jsx --bundle --platform=node --format=cjs --loader:.css=empty --outfile=node_modules/.cache/mif-smoke.cjs --log-level=error && node node_modules/.cache/mif-smoke.cjs",
-    "check": "npm run test && npm run smoke && npm run build",
-    "build:msg": "MIF_ENTRY=messaging vite build --config vite.config.scripts.js"
+    "check": "npm run test && npm run smoke && npm run verify:ext",
+    "build:msg": "MIF_ENTRY=messaging vite build --config vite.config.scripts.js",
+    "verify:ext": "npm run build && node --test tests/extension.test.js"
   },
   "dependencies": {
     "react": "^18.3.1",
