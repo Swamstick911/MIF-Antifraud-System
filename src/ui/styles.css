@@ -1,0 +1,214 @@
+@import './fonts.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens. Restraint is the trust signal: colour only appears when it means something. */
+
+:root {
+  color-scheme: dark;
+
+  /* Ground and elevation. Each step is deliberately small. */
+  --bg:         #070A0F;
+  --surface-1:  #0C1118;
+  --surface-2:  #121A24;
+  --surface-3:  #18222F;
+
+  /* Hairlines do the work shadows would normally do. */
+  --line:        #1E2936;
+  --line-strong: #2B3A4C;
+
+  /* Text, three levels. 16.3 : 8.9 : 5.1 against surface-1. */
+  --text-1: #E8EFF7;
+  --text-2: #A3B4C8;
+  --text-3: #74879E;
+
+  /* Risk tones. These are the only saturated colours in the system. */
+  --safe:       #2DD4A7;
+  --caution:    #F5B33C;
+  --suspicious: #FF8A4C;
+  --danger:     #FF5C6E;
+  --accent:     var(--safe);
+
+  /* Instrument grid, used behind hero areas only. */
+  --grid-line: rgba(255, 255, 255, 0.028);
+
+  --radius:    14px;
+  --radius-sm: 9px;
+  --scale: 1;
+}
+
+:root.light {
+  color-scheme: light;
+  --bg:         #EFF3F8;
+  --surface-1:  #FFFFFF;
+  --surface-2:  #F7FAFC;
+  --surface-3:  #FFFFFF;
+  --line:        #DEE5EE;
+  --line-strong: #B7C4D4;
+  --text-1: #0A121C;
+  --text-2: #44586F;
+  --text-3: #5E7188;
+  --safe:       #077A5A;
+  --caution:    #9A6400;
+  --suspicious: #B4471A;
+  --danger:     #C9252E;
+  --grid-line: rgba(10, 18, 28, 0.035);
+}
+
+/* High contrast is a real mode, not a tint: hairlines become visible strokes and the dimmest text. */
+:root.contrast {
+  --line:        #5E7490;
+  --line-strong: #8EA3BC;
+  --text-2: var(--text-1);
+  --text-3: var(--text-1);
+  --grid-line: transparent;
+}
+:root.light.contrast {
+  --line:        #2B3A4A;
+  --line-strong: #0A121C;
+}
+
+html {
+  /* The user-facing text-size control scales this; everything else is in rem. */
+  font-size: calc(16px * var(--scale));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv05' 1, 'cv11' 1, 'ss03' 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@layer components {
+  /* ── Surfaces ────────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .card-raised { background: var(--surface-2); }
+
+  /* The instrument face: a faint ruled grid behind hero readouts. */
+  .instrument {
+    position: relative;
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 28px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 28px 100%,
+      var(--surface-1);
+  }
+
+  /* ── Type ─────────────────────────────────────────────────────────── */
+  /* Small tracked-out uppercase label. Used for every measurement caption. */
+  .label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    line-height: 1.2;
+  }
+  /* Quantities a person reads — scores, counts, the helpline number — stay in Inter with tabular. */
+  .numeral {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    font-size: 0.8125em;
+  }
+  .dim  { color: var(--text-2); }
+  .dim2 { color: var(--text-3); }
+
+  .display {
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+
+  /* ── Controls ─────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: 0.8125rem;
+    font-weight: 550;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: border-color .16s, color .16s, background .16s;
+  }
+  .btn:hover { border-color: var(--line-strong); color: var(--text-1); }
+  .btn[aria-pressed='true'],
+  .btn-active {
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
+    color: var(--text-1);
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #04140D;
+    font-weight: 650;
+  }
+  :root.light .btn-primary { color: #FFFFFF; }
+  .btn-primary:hover { filter: brightness(1.1); color: #04140D; }
+  :root.light .btn-primary:hover { color: #FFFFFF; }
+  .btn-stop {
+    background: color-mix(in srgb, var(--danger) 16%, var(--surface-2));
+    border-color: color-mix(in srgb, var(--danger) 50%, transparent);
+    color: var(--danger);
+  }
+
+  /* ── Bits ─────────────────────────────────────────────────────────── */
+  .rule { border-color: var(--line); }
+
+  /* Status LED. The only thing in the UI allowed to move while idle. */
+  .led {
+    width: 7px; height: 7px;
+    border-radius: 99px;
+    background: currentColor;
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  .led-live { animation: led 1.9s cubic-bezier(.4,0,.6,1) infinite; }
+  @keyframes led {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent); }
+    70%      { box-shadow: 0 0 0 7px transparent; }
+  }
+}
+
+/* Focus must survive every theme and the high-contrast mode. */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
+.scroll-slim::-webkit-scrollbar { width: 9px; height: 9px; }
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.scroll-slim::-webkit-scrollbar-track { background: transparent; }
+
+/* Motion is informative here (a live feed), so it is reduced, not removed. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
