@@ -18,13 +18,36 @@ npm install
 npm run dev      # http://localhost:5173/dashboard.html — the whole product, in a normal tab
 ```
 
-### Load as a Chrome extension
+### Load the extension (Comet, Chrome, Edge, Brave)
 
 ```bash
 npm run build
 ```
 
-Then `chrome://extensions` → enable **Developer mode** → **Load unpacked** → select the `dist/` folder.
+Then in the browser:
+
+1. open `comet://extensions` (or `chrome://extensions`)
+2. turn on **Developer mode** (top right)
+3. **Load unpacked** → select the `dist/` folder
+
+Chromium removed the `--load-extension` command-line flag in M137, so unpacked
+extensions must be loaded through this page — there is no CLI equivalent.
+
+`npm run verify:ext` checks the built bundle is loadable before you try:
+manifest validity, every referenced file present, no remote code, no bare
+imports in the content scripts, and a permission declared for every
+`chrome.*` API the service worker actually calls.
+
+### What the extension does live
+
+| Surface | Behaviour |
+|---|---|
+| Any download | Inspected before it lands; cancelled above a score of 75, warned at 50 |
+| WhatsApp / Telegram / Google Messages Web | Watches the messages on screen and warns in place when a burst is a flood |
+| Right-click selected text | *Check this message with MIF Shield* → opens the annotated analysis |
+| Right-click a link | Checks the filename and origin, reports in a notification |
+| Toolbar popup | Live counters and the recent event log |
+| Live Activity tab | Full local event log — the one part that is never simulated |
 
 > The dashboard is intentionally identical in both modes. If loading the unpacked extension
 > goes wrong during a demo, `npm run dev` shows the same thing — see `src/platform/bridge.js`.
