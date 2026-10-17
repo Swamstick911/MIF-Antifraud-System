@@ -1,0 +1,68 @@
+@import '../ui/fonts.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Public awareness site. Light, plain-language, separate from the dashboard. */
+:root {
+  --lime: #D4F93C;
+  --violet: #5B32F0;
+  --violet-soft: #EDE8FE;
+  --ink: #15141D;
+  --page: #F4F4F8;
+  --card: #FFFFFF;
+  --line: #E5E5EE;
+  --muted: #5A5A6C;
+  --red: #E4324B;
+  --red-soft: #FDE8EC;
+  --amber-soft: #FDF0D3;
+  --blue-soft: #DFEEFB;
+  --lime-soft: #EAF8C6;
+  --violet-tint: #EFEBFE;
+  --pink-tint: #FCE7EC;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-[72rem] px-5; }
+
+  .eyebrow {
+    @apply inline-block rounded-full px-3 py-1.5 text-[0.76rem] font-bold;
+    background: var(--violet-soft);
+    color: var(--violet);
+  }
+
+  .h2 {
+    @apply text-center font-extrabold tracking-[-0.03em];
+    font-size: clamp(1.75rem, 4.2vw, 2.9rem);
+    line-height: 1.1;
+  }
+
+  .card { background: var(--card); border: 1px solid var(--line); @apply rounded-3xl; }
+
+  .pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[0.95rem] font-bold transition;
+    border: 1px solid transparent;
+  }
+  .pill-lime { background: var(--lime); color: var(--ink); }
+  .pill-violet { background: var(--violet); color: #fff; }
+  .pill-ghost { border-color: #9A98A8; color: inherit; }
+  .pill:hover { filter: brightness(1.05); }
+
+  /* Offset shadow used on the checker and the "don't panic" panel. */
+  .stack-dark { box-shadow: 10px 10px 0 0 var(--ink); }
+  .stack-red  { box-shadow: 10px 10px 0 0 var(--red); }
+}
+
+*:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

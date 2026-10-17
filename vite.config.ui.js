@@ -14,6 +14,7 @@ export default defineConfig({
     target: 'es2022',
     rollupOptions: {
       input: {
+        site: here('./index.html'),
         popup: here('./popup.html'),
         dashboard: here('./dashboard.html'),
       },

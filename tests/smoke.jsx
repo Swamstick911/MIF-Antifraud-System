@@ -7,6 +7,8 @@ import Overview from '../src/ui/tabs/Overview.jsx'
 import MessageShield from '../src/ui/tabs/MessageShield.jsx'
 import FileShield from '../src/ui/tabs/FileShield.jsx'
 import CallShield from '../src/ui/tabs/CallShield.jsx'
+import Site from '../src/site/Site.jsx'
+import Checker from '../src/site/Checker.jsx'
 
 const cases = [
   ['App', <App />],
@@ -15,6 +17,8 @@ const cases = [
   ['MessageShield', <MessageShield />],
   ['FileShield', <FileShield />],
   ['CallShield', <CallShield />],
+  ['Site', <Site />],
+  ['Checker', <Checker />],
 ]
 
 let failed = 0
