@@ -67,13 +67,30 @@ export const TACTICS = [
     explain:
       'No government body, bank or court ever collects money over a phone call, and no legitimate process requires you to move your savings to prove they are clean. The destination account is the scammer.',
     phrases: [
-      'upi', 'google pay', 'phonepe', 'paytm', 'gift card', 'amazon voucher',
-      'bitcoin', 'crypto', 'usdt', 'transfer the money', 'transfer your balance',
+      'gift card', 'amazon voucher', 'bitcoin', 'usdt',
+      'transfer the money', 'transfer your balance', 'transfer rs', 'transfer the amount',
       'verification fee', 'processing fee', 'clearance fee', 'security deposit',
       'refundable deposit', 'safe account', 'secure account', 'rbi account',
       'escrow', 'pay the fine', 'pay the penalty', 'send the amount',
-      'scan this qr', 'scan the qr code',
+      'send the money', 'scan this qr', 'scan the qr code', 'release the prize',
+      'registration fee', 'pay to avoid', 'pay now',
     ],
+    // Catches "send forty thousand rupees", "transfer Rs 10,000", "pay 500".
+    patterns: [
+      /\b(?:send|transfer|pay|deposit|remit)\s+(?:me\s+)?(?:rs\.?|inr|₹)?\s*[\d,]+/i,
+      /\b(?:send|transfer|pay|deposit)\s+(?:\w+\s+){0,2}(?:thousand|lakh|crore|rupees)/i,
+    ],
+  },
+  {
+    // A payment rail named on its own is not a warning sign - genuine bank
+    // alerts mention UPI constantly. It only matters alongside an actual ask,
+    // which the tactic above detects, so this carries a small weight.
+    id: 'paymentRail',
+    label: 'Mentions a payment method',
+    weight: 0.2,
+    explain:
+      'Naming a payment app is normal in genuine bank messages too. It matters here only because it appears next to the other pressure tactics.',
+    phrases: ['upi', 'google pay', 'phonepe', 'paytm', 'crypto', 'net banking'],
   },
   {
     id: 'credentials',

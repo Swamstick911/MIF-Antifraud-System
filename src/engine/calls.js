@@ -10,15 +10,24 @@ export function analyseTranscript(text = '') {
 
   for (const tactic of TACTICS) {
     const found = []
+    const mark = (phrase, index) => {
+      found.push({ phrase, index })
+      highlights.push({
+        start: index,
+        end: index + phrase.length,
+        tacticId: tactic.id,
+        tacticLabel: tactic.label,
+      })
+    }
+
     for (const phrase of tactic.phrases) {
-      for (const index of findAll(haystack, phrase)) {
-        found.push({ phrase, index })
-        highlights.push({
-          start: index,
-          end: index + phrase.length,
-          tacticId: tactic.id,
-          tacticLabel: tactic.label,
-        })
+      for (const index of findAll(haystack, phrase)) mark(phrase, index)
+    }
+    // Regex patterns catch the shapes a fixed phrase list cannot, such as an
+    // amount written out in words or digits.
+    for (const re of tactic.patterns ?? []) {
+      for (const m of text.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : `${re.flags}g`))) {
+        mark(m[0].toLowerCase(), m.index)
       }
     }
     if (found.length === 0) continue

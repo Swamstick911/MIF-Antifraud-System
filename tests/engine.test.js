@@ -125,6 +125,19 @@ test('each sample transcript resolves to its own named scam', () => {
   }
 })
 
+test('a genuine bank alert is not mistaken for a scam', () => {
+  // Real transaction SMS name UPI, NEFT and amounts constantly. Treating a rail
+  // as a demand once scored a real Swiggy debit at 80.
+  for (const real of [
+    'Rs 2,480.00 debited from A/c XX4417 on 17-10-25 via UPI to SWIGGY. Not you? Call 18002586161.',
+    'Rs 45,000.00 credited to A/c XX4417 by NEFT from EMPLOYER PVT LTD. Available balance Rs 61,230.',
+  ]) {
+    const v = analyseTranscript(real)
+    assert.ok(v.score < 25, `genuine alert scored ${v.score}`)
+    assert.equal(v.pattern, null)
+  }
+})
+
 test('a benign call stays silent, an ambiguous one lands mid-range', () => {
   const benign = analyseTranscript(SAMPLE_TRANSCRIPTS.find((t) => t.key === 'benign').text)
   assert.equal(benign.band, 'safe')

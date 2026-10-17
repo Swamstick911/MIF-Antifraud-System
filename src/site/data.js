@@ -98,13 +98,27 @@ export const PRACTICE = {
 
 export const CHECKER_EXAMPLES = {
   message: [
-    { label: 'OTP flood', value: '37 new OTP messages arrived in two minutes from services I never signed up for. One message says Rs 84,500 was debited from my account via UPI.' },
-    { label: 'Fake bank call', value: 'The caller said he is from the bank security team. He said a suspicious transaction needs to be reversed and asked me to read him the OTP, my CVV and card number. He told me to stay on the line and not call the bank separately.' },
-    { label: 'Everyday message', value: 'Hi, this is Meera from Dr. Nair’s clinic confirming your appointment tomorrow at 11 AM. Call the clinic back on the number on your appointment card if you need to reschedule.' },
+    { label: 'Digital arrest', value: 'This is Inspector Rajeev Sharma from the CBI cyber crime branch. A parcel sent in your name was intercepted by the customs department and a banned substance was found inside. A case has been registered against you and an arrest warrant has been issued. You are under digital arrest. Do not disconnect the call and do not tell your family. Transfer your balance to an RBI safe account immediately for verification, within 2 hours.' },
+    { label: 'Fake bank call', value: 'Hello sir, I am calling from the bank security team about your debit card ending 4417. We detected a suspicious transaction of twenty-four thousand rupees. I can reverse it right now. Please read me the OTP as soon as it arrives, and confirm the CVV and card number. Stay on the line and do not call the bank separately.' },
+    { label: 'KYC / SIM block', value: 'This is TRAI. Your Aadhaar was used to register this number and KYC verification is incomplete. Your SIM will be deactivated within 24 hours. Install AnyDesk from this link and share your screen so I can complete the KYC. There is a processing fee of five hundred rupees, scan this QR code to pay. Do it quickly, this is the final notice.' },
+    { label: 'Family emergency', value: 'Is this the father of Ankit? Your son has been detained at the police station, there was an accident and a case has been registered. We can settle this quietly before it goes to court. Send forty thousand rupees on UPI to this number immediately. Do not tell your wife or anyone else.' },
+    { label: 'Lottery prize fee', value: 'Congratulations! Your number has won Rs 25,00,000 in the lucky draw. To release the prize money you must pay a refundable processing fee of 8,500 rupees on UPI today. Do not share this with anyone as the offer is confidential. Send the amount now and claim your reward.' },
+    { label: 'Courier (unclear)', value: 'Hello, this is from the courier department. We tried to deliver a parcel to your address but the address was incomplete. Please confirm your address urgently or the parcel will be returned today. There is a redelivery fee of fifty rupees.' },
+    { label: 'Real bank SMS', value: 'Rs 2,480.00 debited from A/c XX4417 on 17-10-25 via UPI to SWIGGY. Not you? Call 18002586161.' },
+    { label: 'Everyday message', value: 'Hi, this is Meera from Dr Nair clinic. I am calling to confirm your appointment tomorrow at 11 AM. If you need to reschedule you can call the clinic back on the number listed on our website or on your appointment card.' },
   ],
   link: [
-    { label: 'Prize download', value: 'https://whatsapp-image-viewer.top/view/wedding-invite-photo.jpg.apk' },
-    { label: 'Fake bank page', value: 'https://sbi-kyc-update.xyz/statement/SBI_Statement_Oct2025.zip' },
+    { label: 'APK as a photo', value: 'https://whatsapp-image-viewer.top/view/wedding-invite-photo.jpg.apk' },
+    { label: 'Double extension', value: 'https://free-photo-download.tk/get/family-photo.jpg.exe' },
+    { label: 'Paytm lookalike', value: 'https://paytrn.com/invoice/payment-receipt.pdf.exe' },
+    { label: 'Fake bank statement', value: 'https://sbi-kyc-update.xyz/statement/SBI_Statement_Oct2025.zip' },
+    { label: 'Lookalike address', value: 'https://xn--hdfcbank-9cb.com/login/statement.pdf' },
+    { label: 'Shortened link', value: 'https://bit.ly/3xKqRm2' },
     { label: 'Ordinary file', value: 'https://drive.google.com/uc?export=download/team-photo.png' },
+  ],
+  phone: [
+    { label: 'Shortcode', value: '56070' },
+    { label: 'Overseas caller', value: '+1 332 555 0148' },
+    { label: 'Normal mobile', value: '+91 98200 11234' },
   ],
 }
