@@ -119,6 +119,12 @@ To stop it: press `Ctrl + C` in the Terminal.
 npm run build
 ```
 
+That creates a folder called **`dist`**. *That folder is the extension.*
+
+> **Can't find it on GitHub?** You won't — `dist` is built, not stored. Everyone
+> makes their own copy with the command above. Or run `npm run pack` to get a
+> `mif-shield-extension.zip` you can send to someone.
+
 Then:
 1. Open `comet://extensions` (or `chrome://extensions`)
 2. Switch on **Developer mode** (top-right)

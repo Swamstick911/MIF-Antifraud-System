@@ -24,6 +24,11 @@ npm run dev      # http://localhost:5173/dashboard.html — the whole product, i
 npm run build
 ```
 
+This creates the `dist/` folder — that **is** the extension.
+
+> `dist/` is gitignored, so it is not on GitHub. Everyone builds it themselves,
+> or shares the zip from `npm run pack`.
+
 Then in the browser:
 
 1. open `comet://extensions` (or `chrome://extensions`)

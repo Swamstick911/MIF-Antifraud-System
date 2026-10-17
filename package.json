@@ -15,7 +15,8 @@
     "smoke": "esbuild tests/smoke.jsx --bundle --platform=node --format=cjs --loader:.css=empty --outfile=node_modules/.cache/mif-smoke.cjs --log-level=error && node node_modules/.cache/mif-smoke.cjs",
     "check": "npm run test && npm run smoke && npm run verify:ext",
     "build:msg": "MIF_ENTRY=messaging vite build --config vite.config.scripts.js",
-    "verify:ext": "npm run build && node --test tests/extension.test.js"
+    "verify:ext": "npm run build && node --test tests/extension.test.js",
+    "pack": "npm run build && cd dist && zip -qr ../mif-shield-extension.zip . && cd .. && echo \"packed -> mif-shield-extension.zip\""
   },
   "dependencies": {
     "react": "^18.3.1",
