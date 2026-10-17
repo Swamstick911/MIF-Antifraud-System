@@ -1,5 +1,6 @@
 import React from 'react'
 import Checker from './Checker.jsx'
+import Reveal from './Reveal.jsx'
 import { LOOK_LIKE, DEFENCES, RED_FLAGS, GOLDEN_RULES, PANIC_STEPS, PRACTICE } from './data.js'
 
 export default function Site() {
@@ -70,31 +71,32 @@ function Hero() {
              style={{ background: 'linear-gradient(160deg,#2B2936 0%,#45414F 55%,#565263 100%)' }}>
       <div className="wrap grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_minmax(0,22rem)] lg:py-24">
         <div>
-          <span className="inline-block rounded-full px-4 py-2 text-[0.82rem] font-bold"
+          <span className="rise inline-block rounded-full px-4 py-2 text-[0.82rem] font-bold"
                 style={{ background: 'var(--ink)', color: 'var(--lime)' }}>
             A little pause. A lot more protection.
           </span>
 
-          <h1 className="mt-6 font-extrabold tracking-[-0.035em] text-white"
-              style={{ fontSize: 'clamp(2.6rem,7vw,4.6rem)', lineHeight: 1.03 }}>
+          <h1 className="rise mt-6 font-extrabold tracking-[-0.035em] text-white"
+              style={{ fontSize: 'clamp(2.6rem,7vw,4.6rem)', lineHeight: 1.03, animationDelay: '.08s' }}>
             Strange message?<br />Scary call?<br />
-            <span className="mt-2 inline-block px-3 py-0.5"
+            <span className="wipe mt-2 inline-block px-3 py-0.5"
                   style={{ background: 'var(--lime)', color: 'var(--ink)' }}>
               Not today.
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-[1.05rem] leading-relaxed" style={{ color: '#D7D5E0' }}>
+          <p className="rise mt-6 max-w-xl text-[1.05rem] leading-relaxed"
+             style={{ color: '#D7D5E0', animationDelay: '.16s' }}>
             Meet MIF. Learn the signs of message floods, risky downloads and fake calls —
             before you act.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: '.24s' }}>
             <a href="#check" className="pill pill-lime">Check something suspicious ↗</a>
             <a href="#practice" className="pill pill-ghost" style={{ color: '#fff' }}>Spot the scam</a>
           </div>
 
-          <p className="mt-6 text-[0.82rem]" style={{ color: '#A8A5B6' }}>
+          <p className="rise mt-6 text-[0.82rem]" style={{ color: '#A8A5B6', animationDelay: '.32s' }}>
             No login · Learning and advice · Not a live security service
           </p>
         </div>
@@ -111,8 +113,10 @@ function PhoneMock() {
     { text: 'A file in disguise', top: '44%', side: { left: '88%' } },
     { text: 'Fear + secrecy = red flag', top: '70%', side: { right: '92%' } },
   ]
+  const count = useCountUp(18)
+
   return (
-    <div className="relative mx-auto w-full max-w-[20rem]">
+    <div className="rise relative mx-auto w-full max-w-[20rem]" style={{ animationDelay: '.2s' }}>
       <div className="rounded-[2.4rem] border-[7px] p-3 shadow-2xl"
            style={{ borderColor: '#211F2B', background: '#fff' }}>
         <div className="mb-3 flex items-center justify-between px-1 text-[0.7rem] font-bold">
@@ -132,15 +136,16 @@ function PhoneMock() {
 
         <p className="rounded-lg px-2.5 py-1.5 text-[0.72rem] font-bold"
            style={{ background: 'var(--pink-tint)', color: 'var(--red)' }}>
-          18 messages in 1 minute
+          {count} messages in 1 minute
         </p>
 
         {[
           { meta: 'SMS · JUST NOW', body: 'Your OTP is ••••••. Another OTP. And another…' },
           { meta: 'UNKNOWN CONTACT', body: 'Your reward is ready! Open prize.jpg.apk to claim.' },
           { meta: 'INCOMING CALL', body: '“This is the police. Transfer money now. Tell no one.”' },
-        ].map((m) => (
-          <div key={m.meta} className="mt-2 rounded-xl p-2.5" style={{ background: '#F5F5F9' }}>
+        ].map((m, i) => (
+          <div key={m.meta} className="slide-in mt-2 rounded-xl p-2.5"
+               style={{ background: '#F5F5F9', animationDelay: `${0.5 + i * 0.35}s` }}>
             <span className="block text-[0.6rem] font-bold tracking-wide" style={{ color: 'var(--muted)' }}>
               {m.meta}
             </span>
@@ -148,16 +153,16 @@ function PhoneMock() {
           </div>
         ))}
 
-        <div className="mt-3 flex justify-end">
+        <div className="slide-in mt-3 flex justify-end" style={{ animationDelay: '1.6s' }}>
           <span className="rounded-full px-3.5 py-2 text-[0.8rem] font-bold text-white"
                 style={{ background: 'var(--violet)' }}>Pause. Let me check.</span>
         </div>
       </div>
 
-      {flags.map((f) => (
+      {flags.map((f, i) => (
         <span key={f.text}
-              className="absolute hidden whitespace-nowrap rounded-lg bg-white px-3 py-2 text-[0.75rem] font-bold shadow-lg lg:flex lg:items-center lg:gap-1.5"
-              style={{ top: f.top, ...f.side, transform: 'rotate(-2.5deg)' }}>
+              className="absolute hidden whitespace-nowrap rounded-lg bg-white px-3 py-2 text-[0.75rem] font-bold shadow-lg lg:flex lg:items-center lg:gap-1.5 drift"
+              style={{ top: f.top, ...f.side, animationDelay: `${i * 0.9}s` }}>
           <Flag /> {f.text}
         </span>
       ))}
@@ -170,6 +175,27 @@ function ThreatIcon({ name }) {
   if (name === 'file') return <svg {...p}><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M12 11v4m0 3h.01" /></svg>
   if (name === 'call') return <svg {...p}><path d="M15.5 10.5 21 5M21 10.5 15.5 5" /><path d="M3 5.5c0 8 6.5 14.5 14.5 14.5a2 2 0 0 0 2-2v-2l-4-1.5-2 2a14 14 0 0 1-6-6l2-2L8 4.5H6a2 2 0 0 0-2 2z" /></svg>
   return <svg {...p}><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-3.4A8.4 8.4 0 1 1 21 11.5z" /></svg>
+}
+
+// Ticks the flood counter up once, so the hero shows the attack building.
+function useCountUp(target, ms = 1400) {
+  const [n, setN] = React.useState(0)
+  React.useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setN(target)
+      return
+    }
+    const started = performance.now()
+    let frame
+    const step = (now) => {
+      const t = Math.min((now - started) / ms, 1)
+      setN(Math.round(target * (1 - Math.pow(1 - t, 3))))
+      if (t < 1) frame = requestAnimationFrame(step)
+    }
+    frame = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frame)
+  }, [target, ms])
+  return n
 }
 
 function Flag() {
@@ -185,14 +211,16 @@ function Section({ id, eyebrow, title, sub, children, className = '' }) {
   return (
     <section id={id} className={`py-16 sm:py-20 ${className}`}>
       <div className="wrap">
-        {eyebrow ? <p className="text-center"><span className="eyebrow">{eyebrow}</span></p> : null}
-        <h2 className="h2 mt-4">{title}</h2>
-        {sub ? (
-          <p className="mx-auto mt-4 max-w-2xl text-center text-[1.02rem]" style={{ color: 'var(--muted)' }}>
-            {sub}
-          </p>
-        ) : null}
-        <div className="mt-10">{children}</div>
+        <Reveal>
+          {eyebrow ? <p className="text-center"><span className="eyebrow">{eyebrow}</span></p> : null}
+          <h2 className="h2 mt-4">{title}</h2>
+          {sub ? (
+            <p className="mx-auto mt-4 max-w-2xl text-center text-[1.02rem]" style={{ color: 'var(--muted)' }}>
+              {sub}
+            </p>
+          ) : null}
+        </Reveal>
+        <Reveal delay={120} className="mt-10">{children}</Reveal>
       </div>
     </section>
   )
@@ -203,8 +231,9 @@ function LookLike() {
     <Section eyebrow="Know the trick"
              title={<>Scams don’t always look scary.<br />They can look like this.</>}>
       <div className="grid gap-5 md:grid-cols-3">
-        {LOOK_LIKE.map((c) => (
-          <article key={c.title} className="card overflow-hidden p-4">
+        {LOOK_LIKE.map((c, i) => (
+          <Reveal as="article" key={c.title} delay={i * 110}
+                  className="card lift overflow-hidden p-4">
             <div className="rounded-2xl p-4" style={{ background: c.tint }}>
               <div className="flex items-start gap-3 rounded-xl bg-white p-3">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg"
@@ -227,7 +256,7 @@ function LookLike() {
               <p className="mt-2 text-[0.93rem] leading-relaxed" style={{ color: 'var(--muted)' }}>{c.body}</p>
               <p className="mt-3 text-[0.88rem] font-semibold" style={{ color: 'var(--violet)' }}>{c.note}</p>
             </div>
-          </article>
+          </Reveal>
         ))}
       </div>
     </Section>
@@ -250,8 +279,9 @@ function Defences() {
              sub="Here’s how the proposed system would help — and what you can do today."
              className="bg-white">
       <div className="grid gap-5 md:grid-cols-3">
-        {DEFENCES.map((d) => (
-          <article key={d.title} className="rounded-3xl p-5" style={{ background: '#F5F5FA' }}>
+        {DEFENCES.map((d, i) => (
+          <Reveal as="article" key={d.title} delay={i * 110}
+                  className="lift rounded-3xl p-5" style={{ background: '#F5F5FA' }}>
             <div className="flex items-center gap-3">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"
                     style={{ background: '#E7E4FB' }}>
@@ -279,7 +309,7 @@ function Defences() {
                 </li>
               ))}
             </ol>
-          </article>
+          </Reveal>
         ))}
       </div>
 
@@ -296,8 +326,9 @@ function RedFlags() {
     <Section id="flags" eyebrow="Red flags"
              title={<>6 red flags. Learn them once,<br />spot them everywhere.</>}>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {RED_FLAGS.map((f) => (
-          <article key={f.n} className="rounded-3xl p-5" style={{ background: f.tint }}>
+        {RED_FLAGS.map((f, i) => (
+          <Reveal as="article" key={f.n} delay={i * 80}
+                  className="lift rounded-3xl p-5" style={{ background: f.tint }}>
             <div className="flex items-start justify-between">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-white"><Flag /></span>
               <span className="text-[1.9rem] font-extrabold" style={{ color: 'rgba(21,20,29,.22)' }}>{f.n}</span>
@@ -307,7 +338,7 @@ function RedFlags() {
               {f.quote}
             </p>
             <p className="mt-3 text-[0.86rem]" style={{ color: 'var(--muted)' }}>{f.note}</p>
-          </article>
+          </Reveal>
         ))}
       </div>
     </Section>
@@ -386,16 +417,17 @@ function GoldenRules() {
   return (
     <Section eyebrow="3 golden rules" title="If you remember nothing else.">
       <div className="grid gap-5 md:grid-cols-3">
-        {GOLDEN_RULES.map((r) => (
-          <article key={r.title} className="flex flex-col rounded-3xl p-6"
-                   style={{ background: r.bg, color: r.fg, minHeight: '17rem' }}>
+        {GOLDEN_RULES.map((r, i) => (
+          <Reveal as="article" key={r.title} delay={i * 120}
+                  className="lift flex flex-col rounded-3xl p-6"
+                  style={{ background: r.bg, color: r.fg, minHeight: '17rem' }}>
             <span className="grid h-12 w-12 place-items-center rounded-xl"
                   style={{ background: 'rgba(255,255,255,.16)' }}>
               <RuleIcon name={r.icon} fg={r.fg} />
             </span>
             <h3 className="mt-auto text-[1.45rem] font-extrabold leading-tight">{r.title}</h3>
             <p className="mt-3 text-[0.93rem] leading-relaxed" style={{ opacity: 0.86 }}>{r.body}</p>
-          </article>
+          </Reveal>
         ))}
       </div>
     </Section>
