@@ -15,6 +15,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         site: here('./index.html'),
+        extensionTest: here('./extension-test.html'),
         popup: here('./popup.html'),
         dashboard: here('./dashboard.html'),
       },
