@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MIF Shield — extension test bench</title>
+<style>
+  body{margin:0;background:#F4F4F8;color:#15141D;font:16px/1.6 Inter,system-ui,sans-serif}
+  .wrap{max-width:52rem;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:2rem;letter-spacing:-.02em;margin:0 0 6px}
+  .sub{color:#5A5A6C;margin:0 0 28px}
+  section{background:#fff;border:1px solid #E5E5EE;border-radius:18px;padding:20px;margin-bottom:16px}
+  h2{font-size:1.05rem;margin:0 0 4px}
+  .where{display:inline-block;background:#EFEBFE;color:#5B32F0;font-size:.74rem;font-weight:700;
+         padding:4px 10px;border-radius:99px;margin-bottom:12px}
+  p.note{color:#5A5A6C;font-size:.9rem;margin:.4rem 0 1rem}
+  a.danger,button{display:inline-block;background:#15141D;color:#fff;border:0;border-radius:10px;
+    padding:10px 16px;margin:4px 8px 4px 0;font:600 .9rem Inter,sans-serif;cursor:pointer;text-decoration:none}
+  a.safe{background:#077A5A}
+  blockquote{background:#F7F7FA;border-left:4px solid #E4324B;margin:0;padding:14px 16px;border-radius:0 10px 10px 0}
+  code{background:#F1F1F6;padding:2px 6px;border-radius:5px;font-size:.85em}
+  ol{padding-left:20px} li{margin:6px 0}
+</style>
+</head>
+<body><div class="wrap">
+<h1>MIF Shield — test bench</h1>
+<p class="sub">Load the extension first (<code>comet://extensions</code> → Developer mode → Load unpacked → <code>dist</code>), then work down this page.</p>
+
+<section>
+  <span class="where">Watch: a banner appears on this page</span>
+  <h2>1. Click a disguised download link</h2>
+  <p class="note">The content script checks the link before anything downloads. The first two should be stopped; the third should pass silently.</p>
+  <a class="danger" data-file="family-photo.jpg.exe" href="#">family-photo.jpg.exe</a>
+  <a class="danger" data-file="prize.jpg.apk" href="#">prize.jpg.apk</a>
+  <a class="safe" data-file="notes.txt" href="#">notes.txt (should be fine)</a>
+</section>
+
+<section>
+  <span class="where">Watch: a desktop notification + the toolbar badge</span>
+  <h2>2. Force a real download</h2>
+  <p class="note">This creates a genuine download so Chrome's downloads API fires. The service worker inspects it and cancels anything scoring 75+.</p>
+  <button onclick="grab('holiday-photo.jpg.exe')">Download “holiday-photo.jpg.exe”</button>
+  <button onclick="grab('statement.pdf')">Download “statement.pdf”</button>
+</section>
+
+<section>
+  <span class="where">Watch: a new tab opens with the full analysis</span>
+  <h2>3. Select this message, right-click it</h2>
+  <p class="note">Choose <strong>“Check this message with MIF Shield”</strong>.</p>
+  <blockquote>This is Inspector Sharma from the CBI cyber crime branch. A parcel in your name was intercepted by customs and drugs were found. A case has been registered and an arrest warrant issued. You are under digital arrest. Do not disconnect the call and do not tell your family. Transfer your balance to an RBI safe account immediately for verification, within 2 hours.</blockquote>
+</section>
+
+<section>
+  <span class="where">Watch: the toolbar popup + Live Activity tab</span>
+  <h2>4. See everything you just triggered</h2>
+  <ol>
+    <li>Click the <strong>MIF Shield icon</strong> in the toolbar — live counters and recent events.</li>
+    <li>Click <strong>Open full dashboard</strong> → <strong>Live Activity</strong> tab for the full log.</li>
+  </ol>
+</section>
+
+<script>
+  // Links are built from blobs on load, so no file with an alarming name is
+  // ever committed to the repo. The content script reads the download
+  // attribute, which is what it would do on a real site.
+  for (const a of document.querySelectorAll('a[data-file]')) {
+    const blob = new Blob(['harmless test file for MIF Shield'], { type: 'application/octet-stream' })
+    a.href = URL.createObjectURL(blob)
+    a.download = a.dataset.file
+  }
+
+  // Build the file in the page so nothing risky ships in the repo. It is plain
+  // text; only the name is alarming, which is the point of the test.
+  function grab(name) {
+    const blob = new Blob(['This is a harmless test file for MIF Shield.'], { type: 'application/octet-stream' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = name
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000)
+  }
+</script>
+</div></body>
+</html>
